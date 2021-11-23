@@ -1,0 +1,8 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<h2>Jefferson Leonardo da Silva</h2>
+<button><a href="index.jsp" style="text-decoration: none;">INÍCIO</a></button> |
+<button><a href="data.jsp" style="text-decoration: none;">CLASSE DATA</a></button> |
+<button><a href="contatos.jsp" style="text-decoration: none;">CONTATOS</a></button> |
+<button><a href="horario.jsp" style="text-decoration: none;">Horários</a></button>
+<hr/>

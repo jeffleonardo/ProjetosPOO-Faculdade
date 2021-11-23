@@ -1,0 +1,7 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<h2>Jefferson Leonardo da Silva TaksApp</h2>
+<form>
+    Usuário:<input type="text" name="user.login">
+    <input type="submit" name="session.login" value="Entrar">
+</form>

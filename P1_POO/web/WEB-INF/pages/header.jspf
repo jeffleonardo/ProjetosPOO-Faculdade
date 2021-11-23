@@ -1,0 +1,76 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="java.util.Arrays"%>
+<%@page import="java.util.Objects"%>
+<%@page import="java.util.Collections"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page pageEncoding="UTF-8"%>
+<header>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</header>
+
+<%
+    ServletContext context = request.getServletContext();
+    String sessionName = (String) session.getAttribute("session-name");
+    String userOn = request.getParameter("session-name");
+    String logout = request.getParameter("session-logout");
+    List<String> usersOnline = (List) context.getAttribute("usuarios");
+
+    if (userOn != null) {
+        //logar
+        session.setAttribute("session-name", userOn);
+
+        //inicio megasena
+        List<Integer> numeros = new ArrayList<>();
+        for (int i = 1; i < 60; i++) {
+            numeros.add(i);
+        }
+        Collections.shuffle(numeros);
+
+        List<Integer> numerosSorteados = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            numerosSorteados.add(numeros.get(i));
+        }
+        session.setAttribute("nums", numerosSorteados);
+        //fim megasena       
+
+        //inicio usuarios online
+        if (Objects.isNull(usersOnline)) {
+            context.setAttribute("usuarios", new ArrayList<>(Arrays.asList(userOn)));
+        } else {
+            usersOnline.add(userOn);
+            context.setAttribute("usuarios", usersOnline);
+        }
+        response.sendRedirect(request.getRequestURI());
+    } //fim usuarios online
+    //deslogar
+    else if (logout != null) {
+        usersOnline.remove(usersOnline.indexOf(sessionName));
+        session.removeAttribute("session-name");
+        response.sendRedirect(request.getRequestURI());
+    }
+
+%>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" style="margin-left: 20px;">P1 - POO | 4º Ciclo</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">                
+                <li><a class="btn btn-outline-success" href="index.jsp">Home</a></li>
+                <li><a class="btn btn-outline-success" href="jefferson.jsp">Sobre Mim</a></li>
+                <li><a class="btn btn-outline-success" href="jefferson-dica-megasena.jsp">Megasena</a>
+                    
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <form class="d-flex" method="post">
+            <%if (sessionName == null) { %>
+            <input class="form-control me-2" name="session-name" type="search" placeholder="Digite seu nome" aria-label="search">
+            <button class="btn btn-outline-success" type="submit">Login</button>
+            <%} else {%> 
+            <a style="padding: 10px;">Bem vindo, <%=sessionName%></a>
+            <button type="submit" name="session-logout" class="btn btn-outline-success">Logout</button>
+            <%}%>  
+        </form>
+    </div>
+</nav>
+
+
+

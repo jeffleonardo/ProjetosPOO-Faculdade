@@ -1,0 +1,8 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<h1 style="text-align: center; background-color: #81F781; margin:0;height: 50px; padding: 10px">Jefferson App</h1>
+<div style="background-color: #E6E6E6; height: 40px; margin:0; padding: 0; margin-bottom: 50px;">
+    <div style="padding: 10px; text-align: center;">
+        <a style="padding: 10px; text-decoration: none;" href="index.jsp">Home</a> | <a style="padding: 10px; text-decoration: none;" href="about.jsp">About</a>
+    </div>    
+</div>

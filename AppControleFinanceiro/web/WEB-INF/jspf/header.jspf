@@ -1,0 +1,47 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="db.User"%>
+<%@page import="web.DbListener"%>
+<%@page pageEncoding="UTF-8" %>
+
+<%
+    String headerError = null;
+    if(request.getParameter("session.login")!=null){
+        String login = request.getParameter("user.login");
+        String password = request.getParameter("user.password");
+        try{
+            User user = User.getUser(login, password);
+            if(user == null){
+                headerError = "Usuário / senha não encontrado";
+            }else{
+                session.setAttribute("user.login", user.getLogin());
+                session.setAttribute("user.name", user.getName());
+                session.setAttribute("user.role", user.getRole());
+                response.sendRedirect(request.getRequestURI());
+            }
+        }catch(Exception ex){
+            headerError = ex.getMessage();
+        }
+    }else if(request.getParameter("session.logout")!=null){
+        session.removeAttribute("user.login");
+        session.removeAttribute("user.name");
+        session.removeAttribute("user.role");
+        response.sendRedirect(request.getRequestURI());
+    }
+
+%>
+<%if(DbListener.exception!=null){%>
+    <div style="color: red"><%= DbListener.exception.getMessage() %></div>
+    <hr/>
+<%}%>
+<h1><a href="index.jsp">Jefferson Leonardo da Silva TasksApp</a></h1>
+<%if(headerError!=null){%>
+    <div style="color: red"><%= headerError %></div>
+    <hr/>
+<%}%>
+<%if(session.getAttribute("user.login") == null){%>
+    <form method="post">
+        Login: <input type="text" name="user.login"/>
+        <input type="submit" name="session.login" value="Entrar"/>
+    </form>
+<%}%>
+<hr/>
